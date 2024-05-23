@@ -1,0 +1,49 @@
+
+
+\title{Documentación del Código VHDL del Decodificador Decimal a 7 Segmentos}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+Este documento describe un módulo VHDL diseñado para convertir un dígito decimal (de 0 a 9) en la configuración correspondiente de un display de 7 segmentos, permitiendo la visualización de números en dispositivos electrónicos.
+
+\section{Declaración de Bibliotecas y Entidad}
+\begin{verbatim}
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+
+ENTITY deco IS
+    PORT(
+        DEC: IN INTEGER RANGE 0 TO 9; -- ENTRADA ENTRE EL 0 Y 9
+        SEG: OUT STD_LOGIC_VECTOR(7 DOWNTO 0) -- DISPLAY 7 SEG
+    );
+END deco;
+\end{verbatim}
+La entidad `deco` está definida con un puerto de entrada `DEC` que acepta un entero entre 0 y 9, y un puerto de salida `SEG` que es un vector lógico estándar de 8 bits destinado a controlar un display de 7 segmentos.
+
+\section{Arquitectura del Decodificador}
+\begin{verbatim}
+ARCHITECTURE BEAS OF deco IS
+BEGIN
+    -- Decodificador de decimal a 7 seg
+    WITH DEC SELECT
+        SEG <=  "00000011" WHEN 0, -- 0
+                "10011111" WHEN 1, -- 1
+                "00100101" WHEN 2, -- 2
+                "00001101" WHEN 3, -- 3
+                "10011001" WHEN 4, -- 4
+                "01001001" WHEN 5, -- 5
+                "01000001" WHEN 6, -- 6
+                "00011111" WHEN 7, -- 7
+                "00000001" WHEN 8, -- 8
+                "00001001" WHEN 9, -- 9
+                "11111111" WHEN OTHERS; -- OTROS CASOS
+END BEAS;
+\end{verbatim}
+\subsection{Lógica de Decodificación}
+La arquitectura `BEAS` implementa un decodificador utilizando una estructura `WITH SELECT`, que asigna un patrón específico de bits a `SEG` basado en el valor de `DEC`. Cada patrón representa cómo los segmentos del display deben ser iluminados para representar el dígito correspondiente.
+
+\end{document}

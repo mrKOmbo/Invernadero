@@ -1,0 +1,34 @@
+### Descripción general del programa:
+Este programa establece una conexión serial con un Arduino para leer datos que envía el dispositivo. Estos datos se decodifican, procesan y se imprimen. El programa utiliza la biblioteca `schedule` para automatizar la ejecución de la función de lectura cada cinco segundos.
+
+### Funciones y bloques de código:
+
+1. **Importaciones:**
+   - `serial`: Utilizado para la comunicación serial con el Arduino.
+   - `time`: Módulo de tiempo para funciones relacionadas con el tiempo (aunque en este caso no se usa explícitamente en el código proporcionado).
+   - `schedule`: Utilizado para programar la ejecución de la función `dht()` cada cinco segundos.
+
+2. **Función `dht()`**:
+   - **Descripción**: Establece una conexión serial con Arduino, lee datos, los decodifica, y luego limpia las listas para preparar la siguiente lectura.
+   - **Detalles**:
+     - Se establece una conexión con Arduino a través del puerto 'COM3' con una tasa de baudios de 9600.
+     - Se leen los datos de Arduino, se decodifican de bytes a string, y luego se dividen en una lista usando 'x' como delimitador.
+     - Los valores decodificados se imprimen y luego las listas utilizadas para almacenar los datos se limpian.
+     - Se imprime un mensaje de cierre de conexión aunque la línea para cerrar la conexión (`arduino.close()`) está comentada.
+
+3. **Variables globales**:
+   - `list_values`: Lista para almacenar los valores decodificados como strings.
+   - `list_in_floats`: Lista para almacenar los valores convertidos a flotantes (aunque en tu código actual, se almacenan como strings).
+
+4. **Código principal**:
+   - **Funcionamiento**:
+     - Imprime un mensaje indicando que el programa ha comenzado.
+     - Se configura un cronograma que ejecuta la función `dht()` cada cinco segundos.
+     - Un bucle infinito que mantiene el programa en ejecución, llamando a `schedule.run_pending()` para verificar y ejecutar cualquier tarea programada.
+
+### Consideraciones adicionales:
+- **Gestión de recursos**: Aunque se menciona cerrar la conexión con `arduino.close()`, la línea está comentada. Si deseas administrar los recursos de manera eficiente, considera descomentar esta línea o manejar la conexión dentro de la función de manera que se abra y cierre con cada llamada.
+- **Manejo de errores**: Sería prudente agregar manejo de excepciones para errores que puedan surgir durante la comunicación serial, como problemas de conexión o datos corruptos.
+- **Uso de `time.sleep()`**: Aunque está comentado, si encuentras que `schedule` maneja las tareas con precisión suficiente, podrías considerar omitirlo. De lo contrario, ajusta el `sleep` para evitar una alta carga de CPU si es necesario.
+
+Este documento proporciona una visión general del funcionamiento del programa y sus componentes, permitiendo entender y expandir sus funcionalidades según sea necesario.

@@ -1,0 +1,165 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "error",
+					"strict" : false
+				},
+				{
+					"name" : "C[7]",
+					"strict" : false
+				},
+				{
+					"name" : "C[6]",
+					"strict" : false
+				},
+				{
+					"name" : "C[5]",
+					"strict" : false
+				},
+				{
+					"name" : "C[4]",
+					"strict" : false
+				},
+				{
+					"name" : "C[3]",
+					"strict" : false
+				},
+				{
+					"name" : "C[2]",
+					"strict" : false
+				},
+				{
+					"name" : "C[1]",
+					"strict" : false
+				},
+				{
+					"name" : "D[7]",
+					"strict" : false
+				},
+				{
+					"name" : "D[6]",
+					"strict" : false
+				},
+				{
+					"name" : "D[5]",
+					"strict" : false
+				},
+				{
+					"name" : "D[4]",
+					"strict" : false
+				},
+				{
+					"name" : "D[3]",
+					"strict" : false
+				},
+				{
+					"name" : "D[2]",
+					"strict" : false
+				},
+				{
+					"name" : "D[1]",
+					"strict" : false
+				},
+				{
+					"name" : "M[7]",
+					"strict" : false
+				},
+				{
+					"name" : "M[6]",
+					"strict" : false
+				},
+				{
+					"name" : "M[5]",
+					"strict" : false
+				},
+				{
+					"name" : "M[4]",
+					"strict" : false
+				},
+				{
+					"name" : "M[3]",
+					"strict" : false
+				},
+				{
+					"name" : "M[2]",
+					"strict" : false
+				},
+				{
+					"name" : "M[1]",
+					"strict" : false
+				},
+				{
+					"name" : "U[7]",
+					"strict" : false
+				},
+				{
+					"name" : "U[6]",
+					"strict" : false
+				},
+				{
+					"name" : "U[5]",
+					"strict" : false
+				},
+				{
+					"name" : "U[4]",
+					"strict" : false
+				},
+				{
+					"name" : "U[3]",
+					"strict" : false
+				},
+				{
+					"name" : "U[2]",
+					"strict" : false
+				},
+				{
+					"name" : "U[1]",
+					"strict" : false
+				},
+				{
+					"name" : "uni[7]",
+					"strict" : false
+				},
+				{
+					"name" : "uni[6]",
+					"strict" : false
+				},
+				{
+					"name" : "uni[5]",
+					"strict" : false
+				},
+				{
+					"name" : "uni[4]",
+					"strict" : false
+				},
+				{
+					"name" : "uni[1]",
+					"strict" : false
+				},
+				{
+					"name" : "datos",
+					"strict" : false
+				},
+				{
+					"name" : "reset",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				},
+				{
+					"name" : "selector",
+					"strict" : false
+				},
+				{
+					"name" : "hab",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

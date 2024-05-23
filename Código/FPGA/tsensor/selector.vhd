@@ -1,0 +1,31 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;  -- Librería para operaciones numéricas
+
+entity selector is
+    Port (
+        entrada : in STD_LOGIC_VECTOR(39 downto 0);  -- Entrada de datos de 32 bits
+        selectp : in STD_LOGIC;                       -- Selector
+        ente : out STD_LOGIC_VECTOR(7 downto 0); -- Salida de datos de 16 bits
+		  deci : out STD_LOGIC_VECTOR(7 downto 0);-- Salida de datos de 16 bits
+		  unid : out STD_LOGIC_VECTOR(7 downto 0)
+    );
+    
+end selector;
+
+architecture Behavioral of selector is
+begin
+    -- Proceso que determina qué bits seleccionar
+    process(data_in, selectp)
+    begin
+        if selectp = '0' then
+            ente <= entrada(39 downto 32);
+				deci <= entrada(31 downto 24); 
+			   --unidad <= "10010001";-- Selecciona los primeros 16 bits
+        else
+            ente <= entrada(23 downto 16);  
+			   deci <= entrada(15 downto 8);
+			   --unidad <= "01100011";	-- Selecciona los últimos 16 bits
+        end if;
+    end process;
+end Behavioral;

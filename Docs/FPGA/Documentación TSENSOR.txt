@@ -1,0 +1,105 @@
+
+
+\title{Documentación del Código VHDL del Sistema de Sensores}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+Este documento proporciona una descripción detallada del sistema de sensores implementado en VHDL. El sistema gestiona entradas de sensores de temperatura y humedad, procesándolas y permitiendo la visualización según la selección del usuario.
+
+\section{Declaración de Bibliotecas y Entidad}
+\begin{verbatim}
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.NUMERIC_STD.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity tsensor is
+PORT( CLK, SEL, RESET, ENABLE: IN STD_LOGIC;							
+      DATA : INOUT STD_LOGIC;
+      ERROR: OUT STD_LOGIC;
+      ENTERO, DECIMAL, UNI : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+      FIN: OUT STD_LOGIC
+     );  
+end tsensor;
+\end{verbatim}
+
+\section{Arquitectura y Señales}
+\begin{verbatim}
+architecture Behavioral of tsensor is
+signal tEnt, tDec, hEnt, hDec: std_logic_vector(7 downto 0) := (others => '0');
+signal enable_cont, flanco_bajada: std_logic := '0';
+signal reg, reg_total: std_logic_vector(39 downto 0) := (others => '0');
+signal sum: std_logic_vector(7 downto 0) := (others => '0');
+signal cont, cont2: integer range 0 to 50_000_000*2 := 0;
+signal estados: integer range 0 to 15 := 0;
+signal i: integer range 0 to 40 := 40;
+signal counter: integer range 0 to 9999 := 0;
+\end{verbatim}
+
+\section{Procesos y Lógica de Control}
+\subsection{Proceso Selector}
+\begin{verbatim}
+selector_process: process(CLK)
+begin
+    if sum = reg_total(7 downto 0) then
+        tEnt <= reg_total(23 downto 16);
+        tDec <= reg_total(15 downto 8);
+        hEnt <= reg_total(39 downto 32);
+        hDec <= reg_total(31 downto 24);
+    if rising_edge(CLK) then
+        if SEL = '0' then
+            ENTERO <= hEnt;
+            DECIMAL <= hDec;
+            UNI <= "10010001";  
+        else
+            ENTERO <= tEnt;
+            DECIMAL <= tDec;
+            UNI <= "01100011";  
+        end if;
+    end if;
+end if;
+end process;
+\end{verbatim}
+
+\subsection{Proceso de Control de Estado}
+\begin{verbatim}
+process(CLK, RESET)
+begin
+if RESET = '1' then 
+    estados <= 0;
+...
+end if;
+end process;
+\end{verbatim}
+
+\section{Contadores y Detección de Flancos}
+\begin{verbatim
+process(CLK)
+begin
+    if rising_edge(CLK) then
+        if(enable_cont = '1') then
+            cont <= cont + 1;
+        else 
+            cont <= 0;
+        end if;
+    end if;
+end process;
+
+process(CLK)
+begin
+    if rising_edge(CLK) then
+        reg <= reg(2 downto 0)&DATA;
+        if reg = "1100" then
+            flanco_bajada <= '1';
+        else
+            flanco_bajada <= '0';
+        end if;
+    end if;
+end process;
+\end{verbatim}
+
+\end{document}

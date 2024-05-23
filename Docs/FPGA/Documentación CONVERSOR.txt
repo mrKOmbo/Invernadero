@@ -1,0 +1,56 @@
++
+
+\title{Documentación del Código VHDL del Conversor}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+Este documento explica el funcionamiento del VHDL para un conversor que toma un valor binario de 8 bits y lo convierte en dos números enteros separados: las unidades y las decenas del valor binario original.
+
+\section{Declaración de Bibliotecas y Entidad}
+\begin{verbatim}
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.NUMERIC_STD.ALL;
+
+ENTITY conversor IS
+    PORT(
+        VALOR_IN: IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+        D,U: OUT INTEGER RANGE 0 TO 9
+    );
+END ENTITY conversor;
+\end{verbatim}
+Esta sección del código incluye las bibliotecas necesarias y define la entidad `conversor` con un puerto de entrada `VALOR_IN` que acepta un vector lógico estándar de 8 bits, y dos puertos de salida, `D` y `U`, que son enteros representando las decenas y las unidades del número.
+
+\section{Arquitectura del Conversor}
+\begin{verbatim}
+ARCHITECTURE BEAS OF conversor IS
+    SIGNAL T : INTEGER RANGE 0 TO 255;
+BEGIN
+    -- Proceso para calcular valor
+    PROCESS (VALOR_IN)
+    BEGIN
+        T <= TO_INTEGER(unsigned(VALOR_IN));
+    END PROCESS;
+
+    -- Decodificación de Vm_scaled para obtener unidades y decenas
+    U <= T mod 10;
+    D <= (T / 10) mod 10;
+END ARCHITECTURE BEAS;
+\end{verbatim}
+\subsection{Señales y Procesos}
+\textbf{Señales:}
+\begin{itemize}
+    \item \textbf{T:} Señal interna que almacena el valor entero convertido de la entrada binaria, que puede variar de 0 a 255.
+\end{itemize}
+
+\subsection{Procesos}
+\begin{itemize}
+    \item \textbf{Conversión de Entrada:} Un proceso que se activa con cualquier cambio en `VALOR_IN`. Convierte el vector binario a un entero.
+    \item \textbf{Decodificación:} Después de la conversión, el valor entero se divide para determinar las unidades (`U`) y las decenas (`D`) del número.
+\end{itemize}
+
+
+\end{document}
